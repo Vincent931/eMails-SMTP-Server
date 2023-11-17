@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    {#% use "base.html.twig" with head as head %}
+    {{ block('head') }#}
+    {% if app.flashes('messageError') %}
+    <br><br>
+        <div class="flash-message">
+            {% for message in app.flashes('messageError') %}
+                {{ message }}
+             {% endfor %}
+        </div>
+    {% endif %}
+<div>
+	<a href="{{path('list-email')}}" >Lister les adresses</a>
+    <a href="{{path('add-facebook-landing')}}" >Ajouter depuis facebook</a>
+</div>
+<div class="containerP">
+    <div class="container-gauche">    
+        <div class="message-for-admin">
+            <h1>Envoyez des emails à tous vos Users</h1>
+            <p>&nbsp;</p>
+            <h2>Le HTML de votre mail est à templates/emailing/courriel.html.twig<br>
+            Pensez à configurer votre serveur SMTP dans .env</br>
+            Pour envoyer tous les courriels il faut démarrer votre Worker<br>
+            Tapez dans la console:<br>
+            php bin/console messenger:consume async -vv</h2>
+            <p>&nbsp;</p>
+        </div>
+        <form method="post" action="{{ path('emailer') }}">
+            <div class="submit"><input class="btn btn-info" type="submit" value="Test"/></div>
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <input type="hidden" name="etat" value="test"/>
+        </form>
+        <br>
+        <form method="post" action="{{ path('emailer') }}">
+            <div class="submit"><input class="btn btn-info" type="submit" value="Le Listing"/></div>
+            <p>De&nbsp;<input type="number" name="first" step="1" min="0" max="1800000"required/>&nbsp;jusqu'à&nbsp;<input type="number" name="end" step="1" min="0" max="1900000" required/></p>
+            <input type="hidden" name="etat" value="all"/>
+        </form>
+        <br>
+        <div><h2> échoués: </h2>
+        {% set o=0 %}{% for adre1 in refus %}
+        <span class="line">{% set o=o+1 %}{{ o }} - {{ adre1 }}</span><br>
+        {% endfor %}
+        </div>
+        <br>
+        <div><h2> envoyés: <a href="{{ path('purge-adress') }}">purgez</a></h2>
+        {% set o=0 %}{% for adre in tab %}
+        <span class="line">{% set o=o+1 %}{{ o }} - {{ adre.adresse }}</span><br>
+        {% endfor %}
+        </div>
+    </div>
+    <form method="post" action="{{ path('emailer') }}">
+    <input type="hidden" name="etat" value="text"/>
+    <div class="container-droit">
+    <img src="{{ asset('images/ems.png') }}" class="img-em"/>
+        <textarea class="pensebete" name="text">{% if (text is defined) %}{{ text }}{% endif %}</textarea>
+        <span>Notez vos trucs ici</span>
+        <input class="btn btn-info" type="submit" value="Sauvegarder"/>
+    </div>
+    </form>
+</div>
+{% endblock %}

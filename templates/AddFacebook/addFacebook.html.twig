@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if app.session.flashbag.has('messageError') %}
+        <br><br>
+            <div class="flash-message">
+                {% for flashMessage in app.session.flashbag.get('messageError') %}
+                    {{ flashMessage }}
+                {% endfor %}
+            </div>
+    {% endif %}
+    <div>
+        <a href="{{path('emailer')}}" >Accueil</a>
+    </div>
+    <div class="emails-all-container">
+    <h1 class="title-admin">Ajouer au SQL les adresses du fichier (max 20k d'adresses)(environ 22 min)</h1>
+    <br>
+    {% if (stat is not null) %}
+    <p>{{ stat }}</p>
+    {% endif%}
+        <form method="post" action="{{ path('add-file-list-facebook-email') }}" enctype="multipart/form-data"/>
+            <p>Ajouter un fichier.txt avec une liste d'adresses à ajouter</p>
+            <p>Comme ceci</p>
+            <input type="file" name="myfile" id="myfile"></p>
+            <input type="hidden" name="token" value="{{ csrf_token('delete-item') }}"/>
+            <input type="hidden" name="toDo" value="addFile"/>
+            <p><div class="submit"><input class="btn btn-info" type="submit" value="Ajouter"/></div></p>
+        </form>
+    </div>
+{% endblock %}

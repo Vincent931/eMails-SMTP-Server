@@ -1,0 +1,37 @@
+.containerP{
+    width :100%;
+    display:flex;
+    flex-direction:row;
+    margin:auto;
+    justify-content:space-around;
+}
+.container-gauche{
+    width :35%;
+    display:flex;
+    flex-direction:column;
+    margin:auto;
+}
+.container-droit{
+    width :35%;
+    display:flex;
+    flex-direction:column;
+    margin:auto auto auto 0;
+}
+.pensebete{
+    width:300px;
+    height:300px;
+    font-style: roboto;
+    margin: auto;
+    text-align:left;
+}
+span{
+    margin:auto;
+    text-align:center;
+}
+.emails-all-container{
+    width: 500px;
+    margin: auto;
+}
+.img-em{
+    width:450px;
+}

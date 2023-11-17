@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    {% if app.session.flashbag.has('messageError') %}
+        <br><br>
+            <div class="flash-message">
+                {% for flashMessage in app.session.flashbag.get('messageError') %}
+                    {{ flashMessage }}
+                {% endfor %}
+            </div>
+    {% endif %}
+    <div>
+        <a href="{{path('emailer')}}" >Accueil</a>
+    </div>
+    <br>
+    <div class="emails-all-container">
+    <h1 class="title-admin">Liste Emails</h1>
+    {% set t=0 %}
+    {% for email in base_email %}
+    {% set t=t+1 %}
+    {{ t }}&nbsp;{{ email }}<br>
+    {% endfor %}
+    <p>il y a {{ t }} adresses dans votre listing</p>
+    </div>
+{% endblock %}
